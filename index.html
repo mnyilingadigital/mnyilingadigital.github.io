@@ -3,153 +3,597 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Siri za Chumbani</title>
+    <title>Mnyilinga Shop - Nunua kwa Urahisi</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
     <style>
-        /* Kuweka background iwe katikati */
+        /* --- Mipangilio ya Awali --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
         body {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            margin: 0;
-            background-color: #ffffff;
-            font-family: Arial, sans-serif;
-        }
-
-        /* Box la nje kabisa lenye mstari mwekundu (Red Border) */
-        .outer-border {
-            border: 4px solid #f00000;
-            border-radius: 24px;
-            padding: 8px;
-            background-color: white;
-            width: 90%;
-            max-width: 400px;
-            box-sizing: border-box;
-        }
-
-        /* Kadi ya ndani yenye rangi nyekundu iliyokolea (Dark Red) */
-        .inner-card {
-            background-color: #5c0715;
-            border-radius: 16px;
-            display: flex;
-            flex-direction: column;
-            padding-bottom: 12px;
-        }
-
-        /* Sehemu ya juu (Header) yenye icon na kichwa cha habari */
-        .header {
-            display: flex;
-            align-items: center;
-            padding: 20px 25px;
-            color: white;
-        }
-
-        .header svg {
-            width: 45px;
-            height: 45px;
-            margin-right: 20px;
-        }
-
-        .header h1 {
-            margin: 0;
-            font-size: 28px;
-            font-weight: bold;
-            letter-spacing: 0.5px;
-        }
-
-        /* Sehemu ya kuandikia yenye rangi ya kijivu (Grey text area) */
-        .text-area-container {
-            background: linear-gradient(to bottom, #cfc1c2, #969595);
-            margin: 0 12px;
-            height: 250px;
-            border-radius: 12px;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.2);
-        }
-
-        /* Alama kubwa ya kuuliza (?) */
-        .question-mark {
-            position: absolute;
-            font-size: 160px;
-            color: #4a4a4a;
-            font-weight: bold;
-            z-index: 1;
-            font-family: Arial, sans-serif;
-        }
-
-        /* Eneo halisi la kuandikia maneno (Textarea) */
-        textarea {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: transparent;
-            border: none;
-            padding: 20px;
-            box-sizing: border-box;
-            font-size: 18px;
+            background-color: #f2f2f2;
             color: #333;
-            resize: none;
-            z-index: 2; /* Hii inafanya maandishi yawe juu ya alama ya ? */
-            font-family: Arial, sans-serif;
         }
 
-        textarea:focus {
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* --- HEADER (Fixed/Sticky Top) --- */
+        .header-container {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background-color: #ff6a00; /* Rangi ya machungwa kama Alibaba */
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .top-bar {
+            background-color: #e65c00;
+            color: white;
+            font-size: 12px;
+            padding: 5px 5%;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .main-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 5%;
+            color: white;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            font-size: 32px;
+        }
+
+        /* Sehemu ya Kutafuta (Search Bar) kama Amazon */
+        .search-box {
+            display: flex;
+            flex: 1;
+            margin: 0 40px;
+            height: 45px;
+            border-radius: 25px;
+            overflow: hidden;
+            background: white;
+        }
+
+        .search-box select {
+            border: none;
+            background: #f9f9f9;
+            padding: 0 15px;
+            border-right: 1px solid #ccc;
             outline: none;
+            color: #555;
+            cursor: pointer;
         }
 
-        textarea::placeholder {
-            color: #7a7a7a;
-            font-size: 18px;
+        .search-box input {
+            flex: 1;
+            border: none;
+            padding: 0 15px;
+            outline: none;
+            font-size: 15px;
         }
 
-        /* Button ya Send */
-        .send-btn {
-            margin-top: 25px;
-            background: linear-gradient(to bottom, #6d0718, #170104);
+        .search-box button {
+            background-color: #333;
             color: white;
             border: none;
-            padding: 15px 60px;
-            font-size: 32px;
-            font-weight: bold;
-            border-radius: 18px;
+            padding: 0 25px;
             cursor: pointer;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            font-size: 16px;
+            transition: 0.3s;
         }
 
-        .send-btn:active {
-            transform: scale(0.98);
+        .search-box button:hover {
+            background-color: #555;
+        }
+
+        /* Icons za Account na Cart */
+        .header-icons {
+            display: flex;
+            gap: 25px;
+            align-items: center;
+        }
+
+        .icon-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .icon-item i {
+            font-size: 22px;
+            margin-bottom: 3px;
+        }
+
+        .icon-item span {
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -10px;
+            background: #fff;
+            color: #e65c00;
+            border-radius: 50%;
+            padding: 2px 6px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        /* Navigation ya Chini ya Header */
+        .bottom-nav {
+            background-color: #fff;
+            border-bottom: 1px solid #ddd;
+            padding: 10px 5%;
+            display: flex;
+            gap: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #444;
+        }
+
+        .bottom-nav a:hover {
+            color: #ff6a00;
+        }
+
+        /* --- HERO SECTION (Bango Kuu) --- */
+        .hero {
+            display: flex;
+            padding: 20px 5%;
+            gap: 20px;
+            margin-top: 10px;
+        }
+
+        .sidebar-categories {
+            background: white;
+            width: 250px;
+            border-radius: 8px;
+            padding: 15px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .sidebar-categories li {
+            padding: 12px 20px;
+            border-bottom: 1px solid #f1f1f1;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .sidebar-categories li:hover {
+            background-color: #fff3e6;
+            color: #ff6a00;
+            padding-left: 25px;
+        }
+
+        .hero-banner {
+            flex: 1;
+            background: linear-gradient(to right, #333, #555);
+            border-radius: 8px;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 40px;
+            background-image: url('https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        
+        .hero-banner::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.5);
+            border-radius: 8px;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-content h1 {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+
+        .hero-content p {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .btn-shop {
+            background: #ff6a00;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .btn-shop:hover {
+            background: #e65c00;
+            transform: scale(1.05);
+        }
+
+        /* --- PRODUCT GRID (Bidhaa) --- */
+        .section-title {
+            padding: 30px 5% 10px;
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
+            padding: 10px 5% 40px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            transition: 0.3s;
+            position: relative;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .product-card:hover {
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+            transform: translateY(-5px);
+        }
+
+        .discount-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: #e53935;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .product-img {
+            width: 100%;
+            height: 180px;
+            object-fit: contain;
+            margin-bottom: 15px;
+        }
+
+        .product-title {
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 8px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .product-rating {
+            color: #ffb300;
+            font-size: 12px;
+            margin-bottom: 8px;
+        }
+
+        .product-price {
+            font-size: 18px;
+            font-weight: 700;
+            color: #e65c00;
+        }
+
+        .old-price {
+            font-size: 12px;
+            color: #999;
+            text-decoration: line-through;
+            margin-left: 5px;
+        }
+
+        .add-to-cart-btn {
+            width: 100%;
+            padding: 10px;
+            margin-top: 15px;
+            background: white;
+            border: 1px solid #ff6a00;
+            color: #ff6a00;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .product-card:hover .add-to-cart-btn {
+            background: #ff6a00;
+            color: white;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background: #232f3e; /* Rangi ya giza kama Amazon footer */
+            color: white;
+            padding: 40px 5% 20px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            border-bottom: 1px solid #444;
+            padding-bottom: 30px;
+            margin-bottom: 20px;
+        }
+
+        .footer-col h3 {
+            font-size: 16px;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: #ccc;
+            cursor: pointer;
+        }
+
+        .footer-col ul li:hover {
+            color: white;
+            text-decoration: underline;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            font-size: 14px;
+            color: #aaa;
+        }
+
+        /* Responsive Design (Ionekane vizuri kwenye simu) */
+        @media (max-width: 768px) {
+            .main-header {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .search-box {
+                margin: 0;
+                width: 100%;
+            }
+            .hero {
+                flex-direction: column;
+            }
+            .sidebar-categories {
+                width: 100%;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
         }
     </style>
 </head>
 <body>
 
-    <div class="outer-border">
-        <div class="inner-card">
-            
-            <div class="header">
-                <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-                    <rect x="9" y="11" width="6" height="5" rx="1"/>
-                    <path d="M10 11V9a2 2 0 0 1 4 0v2"/>
-                </svg>
-                <h1>Siri za chumbani</h1>
-            </div>
-
-            <div class="text-area-container">
-                <span class="question-mark">?</span>
-                <textarea placeholder="Andika mkasa wako wote hapa...."></textarea>
-            </div>
-
+    <div class="header-container">
+        <div class="top-bar">
+            <span>Karibu Mnyilinga Shop! Pata punguzo la 20% kwa wateja wapya.</span>
+            <span>Tanzania (TZS) | Swahili</span>
         </div>
+
+        <header class="main-header">
+            <div class="logo">
+                <i class="fa-solid fa-cart-shopping"></i>
+                Mnyilinga Shop
+            </div>
+
+            <div class="search-box">
+                <select>
+                    <option>Zote</option>
+                    <option>Simu & Elektroniki</option>
+                    <option>Nguo</option>
+                    <option>Kompyuta</option>
+                </select>
+                <input type="text" placeholder="Tafuta bidhaa, chapa, au kategoria...">
+                <button><i class="fa-solid fa-magnifying-glass"></i></button>
+            </div>
+
+            <div class="header-icons">
+                <div class="icon-item">
+                    <i class="fa-regular fa-user"></i>
+                    <span>Akaunti Yako</span>
+                </div>
+                <div class="icon-item">
+                    <i class="fa-regular fa-heart"></i>
+                    <span>Zilopendwa</span>
+                </div>
+                <div class="icon-item" onclick="alert('Kikapu chako kina bidhaa!')">
+                    <i class="fa-solid fa-cart-arrow-down"></i>
+                    <span>Kikapu</span>
+                    <span class="cart-count" id="cartBadge">0</span>
+                </div>
+            </div>
+        </header>
+
+        <nav class="bottom-nav">
+            <a href="#"><i class="fa-solid fa-bars"></i> Kategoria Zote</a>
+            <a href="#">Deals za Leo</a>
+            <a href="#">Wauzaji Bora</a>
+            <a href="#">Simu Janja</a>
+            <a href="#">Fasheni ya Wanaume</a>
+            <a href="#">Fasheni ya Wanawake</a>
+            <a href="#">Huduma kwa Wateja</a>
+        </nav>
     </div>
 
-    <button class="send-btn">Send</button>
+    <main>
+        <section class="hero">
+            <div class="sidebar-categories">
+                <ul>
+                    <li><i class="fa-solid fa-mobile-screen-button"></i> Simu & Tableti</li>
+                    <li><i class="fa-solid fa-laptop"></i> Kompyuta & Vifaa</li>
+                    <li><i class="fa-solid fa-shirt"></i> Nguo za Kiume</li>
+                    <li><i class="fa-solid fa-shoe-prints"></i> Viatu</li>
+                    <li><i class="fa-solid fa-tv"></i> Elektroniki za Nyumbani</li>
+                    <li><i class="fa-solid fa-gamepad"></i> Michezo (Gaming)</li>
+                    <li><i class="fa-solid fa-basketball"></i> Vifaa vya Michezo</li>
+                </ul>
+            </div>
+            <div class="hero-banner">
+                <div class="hero-content">
+                    <h1>Msimu wa Punguzo Kuu!</h1>
+                    <p>Nunua bidhaa bora kwa bei ya punguzo mpaka 50%. Free delivery kwa Dar es Salaam.</p>
+                    <button class="btn-shop">Nunua Sasa <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </div>
+        </section>
+
+        <h2 class="section-title">Bidhaa Zilizopendekezwa Kwako</h2>
+        <section class="products-grid">
+            
+            <div class="product-card">
+                <div class="discount-badge">-15%</div>
+                <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Smartphone" class="product-img">
+                <div class="product-title">Mnyilinga Pro Max 5G Smartphone, 256GB Storage, 8GB RAM</div>
+                <div class="product-rating">
+                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i> (412)
+                </div>
+                <div class="product-price">TZS 850,000 <span class="old-price">1,000,000</span></div>
+                <button class="add-to-cart-btn" onclick="addToCart()">Weka Kwenye Kikapu</button>
+            </div>
+
+            <div class="product-card">
+                <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Laptop" class="product-img">
+                <div class="product-title">Laptop ya Kisasa kwa Kazi na Masomo, Core i7, 16GB RAM</div>
+                <div class="product-rating">
+                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i> (120)
+                </div>
+                <div class="product-price">TZS 1,200,000</div>
+                <button class="add-to-cart-btn" onclick="addToCart()">Weka Kwenye Kikapu</button>
+            </div>
+
+            <div class="product-card">
+                <div class="discount-badge">-30%</div>
+                <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Viatu" class="product-img">
+                <div class="product-title">Viatu Vya Michezo vya Kiume Imara na Vyepesi</div>
+                <div class="product-rating">
+                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i> (85)
+                </div>
+                <div class="product-price">TZS 45,000 <span class="old-price">65,000</span></div>
+                <button class="add-to-cart-btn" onclick="addToCart()">Weka Kwenye Kikapu</button>
+            </div>
+
+            <div class="product-card">
+                <img src="https://images.unsplash.com/photo-1583394838336-acd977736f90?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Earbuds" class="product-img">
+                <div class="product-title">Wireless Bluetooth Earbuds, Bass nzito na Battery Inayodumu</div>
+                <div class="product-rating">
+                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i><i class="fa-regular fa-star"></i> (300)
+                </div>
+                <div class="product-price">TZS 35,000</div>
+                <button class="add-to-cart-btn" onclick="addToCart()">Weka Kwenye Kikapu</button>
+            </div>
+
+             <div class="product-card">
+                <div class="discount-badge">-10%</div>
+                <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Headphones" class="product-img">
+                <div class="product-title">Headphones Original za Kuzuia Kelele (Noise Cancelling)</div>
+                <div class="product-rating">
+                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i> (52)
+                </div>
+                <div class="product-price">TZS 80,000 <span class="old-price">90,000</span></div>
+                <button class="add-to-cart-btn" onclick="addToCart()">Weka Kwenye Kikapu</button>
+            </div>
+
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h3>Kuhusu Mnyilinga Shop</h3>
+                <ul>
+                    <li>Kuhusu Sisi</li>
+                    <li>Nafasi za Kazi</li>
+                    <li>Sera yetu ya Faragha</li>
+                    <li>Masharti ya Matumizi</li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Tengeneza Pesa Na Sisi</h3>
+                <ul>
+                    <li>Uza Bidhaa Zako Hapa</li>
+                    <li>Kuwa Wakala Wetu</li>
+                    <li>Tangaza Bidhaa</li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Njia Za Malipo</h3>
+                <ul>
+                    <li>M-Pesa / Tigo Pesa / Airtel Money</li>
+                    <li>Visa & Mastercard</li>
+                    <li>Lipa Wakati wa Kupokea (COD)</li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Msaada Kwa Wateja</h3>
+                <ul>
+                    <li>Fuatilia Oda Yako</li>
+                    <li>Msaada wa Kurudisha Bidhaa</li>
+                    <li>Wasiliana Nasi: 0700-000-000</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2026 Mnyilinga Shop. Haki zote zimehifadhiwa. Imetengenezwa kwa Ubora.
+        </div>
+    </footer>
+
+    <script>
+        let cartItems = 0;
+        function addToCart() {
+            cartItems++;
+            document.getElementById('cartBadge').innerText = cartItems;
+            
+            // Animation ndogo
+            const badge = document.getElementById('cartBadge');
+            badge.style.transform = 'scale(1.5)';
+            setTimeout(() => {
+                badge.style.transform = 'scale(1)';
+            }, 200);
+        }
+    </script>
 
 </body>
 </html>
