@@ -1,290 +1,233 @@
 <!DOCTYPE html>
 <html lang="sw">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mnyilinga Shop</title>
-    <style>
-        /* Reset */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mnyilinga Shop Pro</title>
+<style>
+    /* Reset */
+    * {margin:0; padding:0; box-sizing:border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;}
+    body {background-color:#f5f5f7; color:#333;}
 
-        body {
-            background-color: #f5f5f5;
-            color: #333;
-        }
+    /* Fixed Header */
+    header {
+        position: fixed;
+        top:0;
+        left:0;
+        width:100%;
+        background-color:#1e40af;
+        color:white;
+        padding:15px 30px;
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        z-index:1000;
+        box-shadow:0 2px 6px rgba(0,0,0,0.2);
+    }
 
-        /* Header */
-        header {
-            background-color: #1e40af;
-            color: white;
-            padding: 15px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+    header h1 {font-size:24px; cursor:pointer;}
+    nav a {
+        color:white;
+        text-decoration:none;
+        margin-left:20px;
+        font-weight:600;
+        transition: color 0.2s;
+    }
+    nav a:hover {color:#f59e0b;}
+    #cart-toggle {
+        background-color:#f59e0b;
+        border:none;
+        color:white;
+        padding:10px 15px;
+        border-radius:5px;
+        cursor:pointer;
+        font-weight:bold;
+        transition:background-color 0.2s;
+    }
+    #cart-toggle:hover {background-color:#d97706;}
 
-        header h1 {
-            font-size: 24px;
-        }
+    /* Main container */
+    .container {max-width:1300px; margin:120px auto 50px; padding:0 20px;}
 
-        nav a {
-            color: white;
-            text-decoration: none;
-            margin-left: 15px;
-            font-weight: bold;
-        }
+    /* Products grid */
+    .products {display:grid; grid-template-columns:repeat(auto-fill, minmax(250px,1fr)); gap:25px;}
 
-        nav a:hover {
-            text-decoration: underline;
-        }
+    .product-card {
+        background:white;
+        border-radius:10px;
+        overflow:hidden;
+        box-shadow:0 6px 15px rgba(0,0,0,0.1);
+        transition:transform 0.3s, box-shadow 0.3s;
+        display:flex; flex-direction:column; justify-content:space-between;
+        position:relative;
+    }
+    .product-card:hover {
+        transform:translateY(-8px);
+        box-shadow:0 12px 25px rgba(0,0,0,0.15);
+    }
+    .product-card img {width:100%; height:200px; object-fit:cover;}
+    .product-card h3 {font-size:18px; margin:10px;}
+    .product-card p {font-size:16px; margin:0 10px 10px; font-weight:bold; color:#1e40af;}
+    .product-card button {
+        margin:10px;
+        padding:12px;
+        background-color:#f59e0b;
+        color:white;
+        border:none;
+        border-radius:5px;
+        font-weight:bold;
+        cursor:pointer;
+        transition:background-color 0.2s;
+    }
+    .product-card button:hover {background-color:#d97706;}
 
-        /* Main container */
-        .container {
-            max-width: 1200px;
-            margin: 20px auto;
-            padding: 0 15px;
-        }
+    /* Badge for new/sale */
+    .badge {
+        position:absolute;
+        top:10px;
+        left:10px;
+        background:#f43f5e;
+        color:white;
+        padding:5px 10px;
+        font-size:12px;
+        font-weight:bold;
+        border-radius:5px;
+    }
 
-        /* Products grid */
-        .products {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 20px;
-        }
+    /* Cart */
+    .cart {
+        position:fixed;
+        right:20px;
+        top:80px;
+        width:350px;
+        background:white;
+        border-radius:10px;
+        box-shadow:0 4px 15px rgba(0,0,0,0.2);
+        padding:20px;
+        max-height:80vh;
+        overflow-y:auto;
+        display:none;
+        flex-direction:column;
+        z-index:999;
+    }
+    .cart h2 {margin-bottom:15px;}
+    .cart-item {
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        margin-bottom:12px;
+        padding-bottom:8px;
+        border-bottom:1px solid #e5e7eb;
+    }
+    .cart-item button {
+        background-color:red;
+        padding:5px 8px;
+        border:none;
+        border-radius:4px;
+        cursor:pointer;
+        color:white;
+        font-size:12px;
+    }
+    .show-cart {display:flex;}
+    #cart-total {font-weight:bold; margin-top:15px; font-size:16px;}
 
-        .product-card {
-            background-color: white;
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            transition: transform 0.2s ease;
-        }
+    /* Footer */
+    footer {background-color:#1e40af; color:white; text-align:center; padding:25px 20px; margin-top:50px;}
 
-        .product-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .product-card img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            border-radius: 5px;
-            margin-bottom: 10px;
-        }
-
-        .product-card h3 {
-            font-size: 18px;
-            margin-bottom: 5px;
-        }
-
-        .product-card p {
-            font-size: 16px;
-            margin-bottom: 10px;
-            color: #1e40af;
-            font-weight: bold;
-        }
-
-        .product-card button {
-            padding: 10px;
-            background-color: #f59e0b;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: background-color 0.2s ease;
-        }
-
-        .product-card button:hover {
-            background-color: #d97706;
-        }
-
-        /* Cart */
-        .cart {
-            position: fixed;
-            right: 20px;
-            top: 80px;
-            width: 300px;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-            padding: 15px;
-            max-height: 80vh;
-            overflow-y: auto;
-            display: none;
-            flex-direction: column;
-            z-index: 100;
-        }
-
-        .cart h2 {
-            margin-bottom: 10px;
-        }
-
-        .cart-item {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-        }
-
-        .cart-item button {
-            background-color: red;
-            padding: 5px 8px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            color: white;
-            font-size: 12px;
-        }
-
-        .show-cart {
-            display: flex;
-        }
-
-        /* Footer */
-        footer {
-            background-color: #1e40af;
-            color: white;
-            padding: 20px;
-            text-align: center;
-            margin-top: 40px;
-        }
-
-        /* Cart toggle button */
-        #cart-toggle {
-            background-color: #f59e0b;
-            border: none;
-            color: white;
-            padding: 10px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        #cart-toggle:hover {
-            background-color: #d97706;
-        }
-    </style>
+    /* Scroll behavior smooth */
+    html {scroll-behavior:smooth;}
+</style>
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <h1>Mnyilinga Shop</h1>
-        <nav>
-            <a href="#">Nyumbani</a>
-            <a href="#">Bidhaa</a>
-            <a href="#">Mawasiliano</a>
-            <button id="cart-toggle">Cart (0)</button>
-        </nav>
-    </header>
 
-    <!-- Main Content -->
-    <div class="container">
-        <h2>Bidhaa Zetu</h2>
-        <div class="products" id="products">
-            <!-- Bidhaa zitakuja hapa kwa JS -->
-        </div>
-    </div>
+<header>
+    <h1>Mnyilinga Shop Pro</h1>
+    <nav>
+        <a href="#">Nyumbani</a>
+        <a href="#">Bidhaa</a>
+        <a href="#">Mawasiliano</a>
+        <button id="cart-toggle">Cart (0)</button>
+    </nav>
+</header>
 
-    <!-- Cart -->
-    <div class="cart" id="cart">
-        <h2>Cart Yako</h2>
-        <div id="cart-items">
-            <p>Hakuna bidhaa bado</p>
-        </div>
-        <p id="cart-total"></p>
-    </div>
+<div class="container">
+    <h2>Bidhaa Zetu Bora</h2>
+    <div class="products" id="products"></div>
+</div>
 
-    <!-- Footer -->
-    <footer>
-        &copy; 2026 Mnyilinga Shop. Haki zote zimehifadhiwa.
-    </footer>
+<div class="cart" id="cart">
+    <h2>Cart Yako</h2>
+    <div id="cart-items"><p>Hakuna bidhaa bado</p></div>
+    <p id="cart-total"></p>
+</div>
 
-    <script>
-        const products = [
-            {id: 1, name: "Simu ya Mnyilinga X1", price: 350, image: "https://via.placeholder.com/300x200.png?text=Simu+X1"},
-            {id: 2, name: "Laptop Mnyilinga Pro", price: 800, image: "https://via.placeholder.com/300x200.png?text=Laptop+Pro"},
-            {id: 3, name: "Saa ya Mnyilinga Smart", price: 150, image: "https://via.placeholder.com/300x200.png?text=Saa+Smart"},
-            {id: 4, name: "Kofia ya Mnyilinga", price: 20, image: "https://via.placeholder.com/300x200.png?text=Kofia"},
-            {id: 5, name: "Viatu vya Mnyilinga", price: 70, image: "https://via.placeholder.com/300x200.png?text=Viatu"},
-        ];
+<footer>
+    &copy; 2026 Mnyilinga Shop Pro. Haki zote zimehifadhiwa.
+</footer>
 
-        const productsContainer = document.getElementById('products');
-        const cart = document.getElementById('cart');
-        const cartToggle = document.getElementById('cart-toggle');
-        const cartItemsContainer = document.getElementById('cart-items');
-        const cartTotalEl = document.getElementById('cart-total');
-        let cartItems = [];
+<script>
+const products = [
+    {id:1,name:"Simu ya Mnyilinga X1",price:350,image:"https://via.placeholder.com/300x200.png?text=Simu+X1",badge:"New"},
+    {id:2,name:"Laptop Mnyilinga Pro",price:800,image:"https://via.placeholder.com/300x200.png?text=Laptop+Pro",badge:"Sale"},
+    {id:3,name:"Saa ya Mnyilinga Smart",price:150,image:"https://via.placeholder.com/300x200.png?text=Saa+Smart"},
+    {id:4,name:"Kofia ya Mnyilinga",price:20,image:"https://via.placeholder.com/300x200.png?text=Kofia"},
+    {id:5,name:"Viatu vya Mnyilinga",price:70,image:"https://via.placeholder.com/300x200.png?text=Viatu",badge:"New"},
+    {id:6,name:"Backpack ya Mnyilinga",price:55,image:"https://via.placeholder.com/300x200.png?text=Backpack"}
+];
 
-        // Ongeza bidhaa kwenye DOM
-        function loadProducts() {
-            products.forEach(product => {
-                const card = document.createElement('div');
-                card.className = 'product-card';
-                card.innerHTML = `
-                    <img src="${product.image}" alt="${product.name}">
-                    <h3>${product.name}</h3>
-                    <p>$${product.price}</p>
-                    <button onclick="addToCart(${product.id})">Ongeza Cart</button>
-                `;
-                productsContainer.appendChild(card);
-            });
-        }
+const productsContainer = document.getElementById('products');
+const cart = document.getElementById('cart');
+const cartToggle = document.getElementById('cart-toggle');
+const cartItemsContainer = document.getElementById('cart-items');
+const cartTotalEl = document.getElementById('cart-total');
+let cartItems = [];
 
-        // Ongeza bidhaa kwenye cart
-        function addToCart(id) {
-            const product = products.find(p => p.id === id);
-            const item = cartItems.find(i => i.id === id);
+function loadProducts(){
+    products.forEach(product=>{
+        const card = document.createElement('div');
+        card.className='product-card';
+        card.innerHTML=`
+            ${product.badge ? `<div class="badge">${product.badge}</div>` : ''}
+            <img src="${product.image}" alt="${product.name}">
+            <h3>${product.name}</h3>
+            <p>$${product.price}</p>
+            <button onclick="addToCart(${product.id})">Ongeza Cart</button>
+        `;
+        productsContainer.appendChild(card);
+    });
+}
 
-            if(item) {
-                item.quantity += 1;
-            } else {
-                cartItems.push({...product, quantity: 1});
-            }
-            updateCart();
-        }
+function addToCart(id){
+    const product = products.find(p=>p.id===id);
+    const item = cartItems.find(i=>i.id===id);
+    if(item){item.quantity+=1;} else {cartItems.push({...product,quantity:1});}
+    updateCart();
+}
 
-        // Ondoa bidhaa kutoka cart
-        function removeFromCart(id) {
-            cartItems = cartItems.filter(item => item.id !== id);
-            updateCart();
-        }
+function removeFromCart(id){
+    cartItems = cartItems.filter(item=>item.id!==id);
+    updateCart();
+}
 
-        // Update cart display
-        function updateCart() {
-            cartItemsContainer.innerHTML = '';
-            if(cartItems.length === 0) {
-                cartItemsContainer.innerHTML = '<p>Hakuna bidhaa bado</p>';
-            } else {
-                cartItems.forEach(item => {
-                    const div = document.createElement('div');
-                    div.className = 'cart-item';
-                    div.innerHTML = `
-                        <span>${item.name} x${item.quantity}</span>
-                        <button onclick="removeFromCart(${item.id})">Ondoa</button>
-                    `;
-                    cartItemsContainer.appendChild(div);
-                });
-            }
-
-            const total = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
-            cartTotalEl.textContent = cartItems.length > 0 ? `Jumla: $${total}` : '';
-            cartToggle.textContent = `Cart (${cartItems.reduce((acc, i) => acc + i.quantity, 0)})`;
-        }
-
-        // Toggle cart visibility
-        cartToggle.addEventListener('click', () => {
-            cart.classList.toggle('show-cart');
+function updateCart(){
+    cartItemsContainer.innerHTML='';
+    if(cartItems.length===0){cartItemsContainer.innerHTML='<p>Hakuna bidhaa bado</p>';}
+    else{
+        cartItems.forEach(item=>{
+            const div=document.createElement('div');
+            div.className='cart-item';
+            div.innerHTML=`<span>${item.name} x${item.quantity}</span><button onclick="removeFromCart(${item.id})">Ondoa</button>`;
+            cartItemsContainer.appendChild(div);
         });
+    }
+    const total = cartItems.reduce((acc,item)=>acc + item.price * item.quantity,0);
+    cartTotalEl.textContent = cartItems.length>0 ? `Jumla: $${total}`:'';
+    cartToggle.textContent = `Cart (${cartItems.reduce((acc,i)=>acc+i.quantity,0)})`;
+}
 
-        loadProducts();
-    </script>
+cartToggle.addEventListener('click',()=>{cart.classList.toggle('show-cart');});
+
+loadProducts();
+</script>
 </body>
 </html>
