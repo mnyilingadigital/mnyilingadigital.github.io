@@ -3,27 +3,153 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mnyilinga Anonymous App</title>
+    <title>Siri za Chumbani</title>
+    <style>
+        /* Kuweka background iwe katikati */
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #ffffff;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Box la nje kabisa lenye mstari mwekundu (Red Border) */
+        .outer-border {
+            border: 4px solid #f00000;
+            border-radius: 24px;
+            padding: 8px;
+            background-color: white;
+            width: 90%;
+            max-width: 400px;
+            box-sizing: border-box;
+        }
+
+        /* Kadi ya ndani yenye rangi nyekundu iliyokolea (Dark Red) */
+        .inner-card {
+            background-color: #5c0715;
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            padding-bottom: 12px;
+        }
+
+        /* Sehemu ya juu (Header) yenye icon na kichwa cha habari */
+        .header {
+            display: flex;
+            align-items: center;
+            padding: 20px 25px;
+            color: white;
+        }
+
+        .header svg {
+            width: 45px;
+            height: 45px;
+            margin-right: 20px;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 28px;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+
+        /* Sehemu ya kuandikia yenye rangi ya kijivu (Grey text area) */
+        .text-area-container {
+            background: linear-gradient(to bottom, #cfc1c2, #969595);
+            margin: 0 12px;
+            height: 250px;
+            border-radius: 12px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.2);
+        }
+
+        /* Alama kubwa ya kuuliza (?) */
+        .question-mark {
+            position: absolute;
+            font-size: 160px;
+            color: #4a4a4a;
+            font-weight: bold;
+            z-index: 1;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Eneo halisi la kuandikia maneno (Textarea) */
+        textarea {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            border: none;
+            padding: 20px;
+            box-sizing: border-box;
+            font-size: 18px;
+            color: #333;
+            resize: none;
+            z-index: 2; /* Hii inafanya maandishi yawe juu ya alama ya ? */
+            font-family: Arial, sans-serif;
+        }
+
+        textarea:focus {
+            outline: none;
+        }
+
+        textarea::placeholder {
+            color: #7a7a7a;
+            font-size: 18px;
+        }
+
+        /* Button ya Send */
+        .send-btn {
+            margin-top: 25px;
+            background: linear-gradient(to bottom, #6d0718, #170104);
+            color: white;
+            border: none;
+            padding: 15px 60px;
+            font-size: 32px;
+            font-weight: bold;
+            border-radius: 18px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .send-btn:active {
+            transform: scale(0.98);
+        }
+    </style>
 </head>
 <body>
 
-    <h1>Karibu kwenye Mnyilinga Anonymous</h1>
+    <div class="outer-border">
+        <div class="inner-card">
+            
+            <div class="header">
+                <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                    <rect x="9" y="11" width="6" height="5" rx="1"/>
+                    <path d="M10 11V9a2 2 0 0 1 4 0v2"/>
+                </svg>
+                <h1>Siri za chumbani</h1>
+            </div>
 
-    <p>Tuma ujumbe wako hapa chini (demo simple, hakuna backend bado):</p>
+            <div class="text-area-container">
+                <span class="question-mark">?</span>
+                <textarea placeholder="Andika mkasa wako wote hapa...."></textarea>
+            </div>
 
-    <form>
-        <textarea placeholder="Andika ujumbe wako..." rows="5" cols="40"></textarea><br><br>
-        <button type="button">Tuma Ujumbe</button>
-    </form>
-
-    <h2>Ujumbe uliotumwa (demo)</h2>
-    <div>
-        <p>(Hapa messages zitaonekana baada ya kuimplement backend)</p>
+        </div>
     </div>
 
-    <footer>
-        <p>© 2026 Mnyilinga Anonymous App</p>
-    </footer>
+    <button class="send-btn">Send</button>
 
 </body>
 </html>
