@@ -303,7 +303,21 @@ input, textarea {
     cursor: text;
 }
         
+        
+/* Zima kuchagua text kwenye website nzima */
+body {
+    user-select: none;
+    -webkit-user-select: none; /* Kwa Chrome / Safari */
+    -ms-user-select: none;     /* Kwa Edge */
+}
 
+/* Ruhusu kuchagua na kuandika ndani ya sehemu za input tu */
+input, textarea {
+    user-select: auto;
+    -webkit-user-select: auto;
+    -ms-user-select: auto;
+}        
+        
 
 
 
