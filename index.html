@@ -82,18 +82,12 @@
             gap: 10px;
         }
 
-        .header-icons i {
-            font-size: 1.2rem;
-            color: var(--text-main);
-            margin-left: 15px;
-            cursor: pointer;
-            transition: 0.3s ease;
-        }
 
-        .header-icons i:hover {
-            color: #ff007f;
-            transform: scale(1.1);
-        }
+
+
+
+
+
 
         /* =========================================
            3. MAIN CONTAINER (SEHEMU YA KUTUMA SIRI)
@@ -322,6 +316,182 @@ input, textarea {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+            
+            
+        }
+
+        .header-right-icons {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        /* GitHub Style Hamburger */
+        .menu-toggle {
+            width: 24px;
+            height: 18px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .bar {
+            width: 100%;
+            height: 2px;
+            background-color: white;
+            border-radius: 2px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Animation ya kuwa X */
+        .is-open .bar:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+        .is-open .bar:nth-child(2) { opacity: 0; transform: translateX(10px); }
+        .is-open .bar:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+        /* =========================================
+           3. GITHUB FULL SCREEN MENU OVERLAY
+           ========================================= */
+        .nav-overlay {
+            position: fixed;
+            top: 70px; /* Chini ya header */
+            left: 0;
+            width: 100%;
+            height: 0; /* Imefichwa */
+            background-color: #0d1117; /* Rangi nyeusi ya GitHub */
+            z-index: 1999;
+            overflow: hidden;
+            transition: height 0.4s ease-in-out;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .nav-overlay.active {
+            height: calc(100vh - 70px);
+        }
+
+        .nav-list {
+            list-style: none;
+            width: 100%;
+        }
+
+        .nav-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 25px;
+            border-bottom: 1px solid #21262d;
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+            transition: background 0.2s;
+        }
+
+        .nav-item:hover {
+            background-color: #161b22;
+        }
+
+        .nav-item i {
+            color: #7d8590;
+            font-size: 14px;
+        }
+
+        .menu-footer {
+            padding: 25px;
+            margin-top: auto; /* Inasukuma hivi chini kabisa */
+            background: #010409;
+        }
+
+        .search-box {
+            position: relative;
+            margin-bottom: 15px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 10px 10px 10px 35px;
+            background: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            color: white;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #7d8590;
+        }
+
+        .btn-signup {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background-color: #21262d;
+            border: 1px solid #30363d;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+        
+        
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         
     </style>
 </head>
@@ -343,21 +513,88 @@ input, textarea {
 
 
 
-        
-   <div class="header-icons">
-    <i class="fas fa-share-nodes" title="Share Link"></i>
-    <i class="fas fa-bars" id="hamburger" title="Menu"></i>
-</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
 
 <!-- Menu hidden initially -->
-<div id="menu-options" style="display:none; position:absolute; top:50px; right:15px; background:#fff; border:1px solid #ccc; padding:10px; border-radius:5px; z-index:100;">
-    <ul style="list-style:none; margin:0; padding:0;">
-        <li><a href="#">Home</a></li>
-        <li><a href="#">About</a></li>
-        <li><a href="#">Services</a></li>
-        <li><a href="#">Contact</a></li>
-    </ul>
-</div>
+
+
+
+
+        <div class="header-right-icons">
+          
+          
+          
+          
+          
+            <div class="menu-toggle" id="menuBtn">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </header>
+
+    <nav class="nav-overlay" id="navOverlay">
+        <div class="nav-list">
+            <a href="#" class="nav-item">Platform <i class="fa-solid fa-chevron-right"></i></a>
+            <a href="#" class="nav-item">Solutions <i class="fa-solid fa-chevron-right"></i></a>
+            <a href="#" class="nav-item">Resources <i class="fa-solid fa-chevron-right"></i></a>
+            <a href="#" class="nav-item">Open Source <i class="fa-solid fa-chevron-right"></i></a>
+            <a href="#" class="nav-item">Pricing</a>
+        </div>
+        <div class="menu-footer">
+            <div class="search-box">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" placeholder="Search or jump to...">
+            </div>
+            <a href="#" class="btn-signup">Sign up</a>
+        </div>
+    </nav>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -464,5 +701,54 @@ input, textarea {
             });
         });
     </script>
+    
+    
+    
+    
+    
+    
+    
+    
+
+ <script>
+        const menuBtn = document.getElementById('menuBtn');
+        const navOverlay = document.getElementById('navOverlay');
+        const submitBtn = document.getElementById('submitBtn');
+        const secretInput = document.getElementById('secretInput');
+        const toast = document.getElementById('successToast');
+
+        // Logic ya Menu
+        menuBtn.addEventListener('click', () => {
+            menuBtn.classList.toggle('is-open');
+            navOverlay.classList.toggle('active');
+            // Zuia body kuscroll menu ikiwa wazi
+            document.body.style.overflow = navOverlay.classList.contains('active') ? 'hidden' : 'auto';
+        });
+
+        // Logic ya Kutuma (Placeholder)
+        submitBtn.addEventListener('click', () => {
+            if(secretInput.value.trim() === "") return;
+            submitBtn.innerText = "Inatuma...";
+            setTimeout(() => {
+                secretInput.value = "";
+                submitBtn.innerText = "Tuma Siri Yako";
+                toast.classList.add('show');
+                setTimeout(() => toast.classList.remove('show'), 3000);
+            }, 1000);
+        });
+    </script>    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 </body>
 </html>
