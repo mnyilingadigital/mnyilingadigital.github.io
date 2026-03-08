@@ -2,28 +2,21 @@
 <html lang="sw">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Siri za Chumbani | Tuma Bila Kujulikana</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Siri Board | Anonymous Messages</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     
     <style>
-        /* =========================================
-           1. MIKAKATI YA MSINGI (CSS RESET & VARIABLES)
-           ========================================= */
         :root {
-            --primary-gradient: linear-gradient(135deg, #ff007f, #7f00ff);
-            --bg-color: #0f0c29;
-            --bg-gradient: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
-            --glass-bg: rgba(255, 255, 255, 0.05);
-            --glass-border: rgba(255, 255, 255, 0.1);
-            --text-main: #ffffff;
-            --text-muted: #b3b3b3;
-            --error-color: #ff3333;
-            --success-color: #00e676;
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --neon-accent: #00f2fe;
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --dark-bg: #0f172a;
+            --text-color: #f8fafc;
         }
 
-        
         * {
             margin: 0;
             padding: 0;
@@ -32,87 +25,204 @@
         }
 
         body {
-            background: var(--bg-gradient);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
-            color: var(--text-main);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
+            background-color: var(--dark-bg);
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(118, 75, 162, 0.2) 0, transparent 50%), 
+                radial-gradient(at 50% 0%, rgba(0, 242, 254, 0.1) 0, transparent 50%);
+            color: var(--text-color);
+            line-height: 1.6;
             overflow-x: hidden;
+            min-height: 100vh;
         }
 
-        /* Background Animation kali */
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* =========================================
-           2. HEADER (FIXED - HAISOGEI)
-           ========================================= */
+        /* --- Header Section --- */
         header {
             position: fixed;
             top: 0;
-            left: 0;
             width: 100%;
-            height: 70px;
-            background: rgba(15, 12, 41, 0.85);
-            backdrop-filter: blur(15px); /* Inafanya iwe na ukungu kwa nyuma kama kioo */
-            -webkit-backdrop-filter: blur(15px);
-            border-bottom: 1px solid var(--glass-border);
+            padding: 1rem 5%;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 20px;
-            z-index: 1000;
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
         }
 
         .logo {
             font-size: 1.5rem;
-            font-weight: 800;
+            font-weight: 600;
             background: var(--primary-gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            letter-spacing: 1px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
         }
 
-
-
-
-
-
-
-
-        /* =========================================
-           3. MAIN CONTAINER (SEHEMU YA KUTUMA SIRI)
-           ========================================= */
-        main {
-            margin-top: 100px; /* Nafasi ya header iliyofixed */
-            flex: 1;
+        .nav-menu {
             display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
+            gap: 20px;
         }
 
-        .ngl-card {
+        .hamburger { display: none; cursor: pointer; }
+
+        /* --- Main Layout --- */
+        .container {
+            max-width: 800px;
+            margin: 100px auto 50px;
+            padding: 0 20px;
+        }
+
+        /* --- Form Section --- */
+        .input-card {
             background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 25px;
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 25px;
+            border: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 40px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+        }
+
+        textarea {
             width: 100%;
-            max-width: 400px;
-            padding: 30px 20px;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            background: rgba(0,0,0,0.2);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 12px;
+            padding: 15px;
+            color: white;
+            resize: none;
+            font-size: 1rem;
+            margin-bottom: 10px;
+            transition: 0.3s;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: var(--neon-accent);
+            box-shadow: 0 0 10px rgba(0, 242, 254, 0.3);
+        }
+
+        .form-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .char-counter { font-size: 0.8rem; color: #94a3b8; }
+
+        .btn-submit {
+            background: var(--primary-gradient);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(118, 75, 162, 0.4);
+        }
+
+        .btn-submit:active { transform: scale(0.95); }
+
+        .shake { animation: shake 0.5s; }
+
+        /* --- Message Cards --- */
+        #message-board {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .msg-card {
+            background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            border-radius: 18px;
+            padding: 20px;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: 0.3s ease;
+            animation: fadeInUp 0.6s ease backwards;
+        }
+
+        .msg-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-5px);
+            border-color: rgba(0, 242, 254, 0.3);
+        }
+
+        .msg-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            margin-right: 12px;
+            background: #2d3748;
+            border: 2px solid var(--neon-accent);
+        }
+
+        .author-info h4 { font-size: 0.95rem; font-weight: 600; }
+        .author-info span { font-size: 0.75rem; color: #94a3b8; }
+
+        .msg-body {
+            font-size: 1rem;
+            color: #cbd5e1;
+            word-wrap: break-word;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: #10b981;
+            border-radius: 50%;
+            display: inline-block;
+            margin-left: 5px;
+            box-shadow: 0 0 5px #10b981;
+        }
+
+        /* --- Toast Notification --- */
+        #toast-container {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2000;
+        }
+
+        .toast {
+            background: var(--primary-gradient);
+            padding: 12px 25px;
+            border-radius: 50px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            display: none;
+            animation: slideUp 0.4s ease;
+        }
+
+        /* --- Footer --- */
+        footer {
             text-align: center;
-            animation: slideUp 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            padding: 40px;
+            color: #64748b;
+            font-size: 0.8rem;
+        }
+
+        /* --- Keyframes --- */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
         }
 
         @keyframes slideUp {
@@ -120,635 +230,161 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .profile-pic {
-            width: 90px;
-            height: 90px;
-            border-radius: 50%;
-            background: var(--primary-gradient);
-            padding: 3px; /* Inatengeneza border ya gradient */
-            margin: 0 auto 15px auto;
-            position: relative;
+        /* Responsive */
+        @media (max-width: 600px) {
+            .nav-menu { display: none; }
+            .hamburger { display: block; }
+            .container { margin-top: 80px; }
         }
-
-        .profile-pic img {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid #1a162b;
-        }
-
-        /* Kijikidude cha 'Online' */
-        .online-dot {
-            position: absolute;
-            bottom: 5px;
-            right: 5px;
-            width: 15px;
-            height: 15px;
-            background-color: var(--success-color);
-            border-radius: 50%;
-            border: 2px solid #1a162b;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 230, 118, 0.7); }
-            70% { transform: scale(1.1); box-shadow: 0 0 0 10px rgba(0, 230, 118, 0); }
-            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 230, 118, 0); }
-        }
-
-        h2.username {
-            font-size: 1.2rem;
-            margin-bottom: 5px;
-            font-weight: 600;
-        }
-
-        p.prompt-text {
-            font-size: 0.95rem;
-            color: var(--text-muted);
-            margin-bottom: 25px;
-            line-height: 1.5;
-        }
-
-        /* =========================================
-           4. FORM NA TEXTAREA YA SIRI
-           ========================================= */
-        .input-group {
-            position: relative;
-            margin-bottom: 40px;
-        }
-
-        textarea {
-            width: 100%;
-            height: 200px;
-            background: rgba(0, 0, 0, 0.3);
-            border: 2px solid var(--glass-border);
-            border-radius: 15px;
-            padding: 15px;
-            color: white;
-            font-size: 1rem;
-            resize: none;
-            transition: all 0.3s ease;
-        }
-
-        textarea:focus {
-            outline: none;
-            border-color: #ff007f;
-            box-shadow: 0 0 15px rgba(255, 0, 127, 0.3);
-        }
-
-        textarea::placeholder {
-            color: rgba(255, 255, 255, 0.4);
-        }
-
-        .char-counter {
-            position: absolute;
-            bottom: 10px;
-            right: 15px;
-            font-size: 0.75rem;
-            color: var(--text-muted);
-        }
-
-        .submit-btn {
-            width: 100%;
-            padding: 15px;
-            border: none;
-            border-radius: 15px;
-            background: var(--primary-gradient);
-            color: white;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .submit-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(255, 0, 127, 0.4);
-        }
-
-        .submit-btn:active {
-            transform: translateY(1px);
-        }
-
-        /* Animation ya kutetema (Kama mtu hajaandika kitu) */
-        .shake {
-            animation: shakeError 0.4s ease-in-out;
-            border-color: var(--error-color) !important;
-        }
-
-        @keyframes shakeError {
-            0% { transform: translateX(0); }
-            25% { transform: translateX(-8px); }
-            50% { transform: translateX(8px); }
-            75% { transform: translateX(-8px); }
-            100% { transform: translateX(0); }
-        }
-
-        /* =========================================
-           5. NOTIFICATION TOAST (UJUMBE WA MAFANIKIO)
-           ========================================= */
-        .toast {
-            position: fixed;
-            top: -400px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(0, 230, 118, 0.2);
-            border: 1px solid var(--success-color);
-            color: var(--success-color);
-            padding: 15px 30px;
-            border-radius: 30px;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            z-index: 2000;
-            backdrop-filter: blur(10px);
-            transition: top 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-        }
-
-        .toast.show {
-            top: 300px; /* Inashuka chini ya header */
-        }
-
-        /* =========================================
-           6. FOOTER 
-           ========================================= */
-        footer {
-            text-align: center;
-            padding: 40px;
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            background: rgba(0, 0, 0, 0.2);
-        }
-
-
-
-/* Zuia I-beam kwenye text zote */
-body {
-    cursor: default;
-}
-
-/* Hakikisha sehemu za kuandika tu ndizo zina I-beam */
-input, textarea {
-    cursor: text;
-}
-        
-        
-/* Zima kuchagua text kwenye website nzima */
-body {
-    user-select: none;
-    -webkit-user-select: none; /* Kwa Chrome / Safari */
-    -ms-user-select: none;     /* Kwa Edge */
-}
-
-/* Ruhusu kuchagua na kuandika ndani ya sehemu za input tu */
-input, textarea {
-    user-select: auto;
-    -webkit-user-select: auto;
-    -ms-user-select: auto;
-}        
-        
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            
-            
-            
-        }
-
-        .header-right-icons {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        /* GitHub Style Hamburger */
-        .menu-toggle {
-            width: 24px;
-            height: 18px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            cursor: pointer;
-            position: relative;
-        }
-
-        .bar {
-            width: 100%;
-            height: 2px;
-            background-color: white;
-            border-radius: 2px;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        /* Animation ya kuwa X */
-        .is-open .bar:nth-child(1) { transform: translateY(8px) rotate(45deg); }
-        .is-open .bar:nth-child(2) { opacity: 0; transform: translateX(10px); }
-        .is-open .bar:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
-
-        /* =========================================
-           3. GITHUB FULL SCREEN MENU OVERLAY
-           ========================================= */
-        .nav-overlay {
-            position: fixed;
-            top: 70px; /* Chini ya header */
-            left: 0;
-            width: 100%;
-            height: 0; /* Imefichwa */
-            background-color: #0d1117; /* Rangi nyeusi ya GitHub */
-            z-index: 1999;
-            overflow: hidden;
-            transition: height 0.4s ease-in-out;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .nav-overlay.active {
-            height: calc(100vh - 70px);
-        }
-
-        .nav-list {
-            list-style: none;
-            width: 100%;
-        }
-
-        .nav-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 18px 25px;
-            border-bottom: 1px solid #21262d;
-            color: white;
-            text-decoration: none;
-            font-size: 16px;
-            font-weight: 500;
-            transition: background 0.2s;
-        }
-
-        .nav-item:hover {
-            background-color: #161b22;
-        }
-
-        .nav-item i {
-            color: #7d8590;
-            font-size: 14px;
-        }
-
-        .menu-footer {
-            padding: 25px;
-            margin-top: auto; /* Inasukuma hivi chini kabisa */
-            background: #010409;
-        }
-
-        .search-box {
-            position: relative;
-            margin-bottom: 15px;
-        }
-
-        .search-box input {
-            width: 100%;
-            padding: 10px 10px 10px 35px;
-            background: #0d1117;
-            border: 1px solid #30363d;
-            border-radius: 6px;
-            color: white;
-        }
-
-        .search-box i {
-            position: absolute;
-            left: 12px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #7d8590;
-        }
-
-        .btn-signup {
-            display: block;
-            width: 100%;
-            padding: 12px;
-            background-color: #21262d;
-            border: 1px solid #30363d;
-            color: white;
-            text-align: center;
-            text-decoration: none;
-            border-radius: 6px;
-            font-weight: 600;
-        }
-        
-        
-        
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
     </style>
 </head>
 <body>
 
-    <div id="successToast" class="toast">
-        <i class="fas fa-check-circle"></i> Hongera mkasa wako umetumwa Kikamilifu! 🤫
+    <header>
+        <div class="logo">SIRI BOARD</div>
+        <nav class="nav-menu">
+            <a href="#" style="color: white; text-decoration: none;">Home</a>
+            <a href="#" style="color: white; text-decoration: none;">Explore</a>
+        </nav>
+        <div class="hamburger"><i class="fas fa-bars"></i></div>
+    </header>
+
+    <div class="container">
+        <section class="input-card">
+            <h3 style="margin-bottom: 15px;">Andika siri yako...</h3>
+            <textarea id="messageInput" rows="4" placeholder="Unawaza nini leo?" maxlength="280"></textarea>
+            <div class="form-footer">
+                <span class="char-counter"><span id="count">0</span>/280</span>
+                <button class="btn-submit" onclick="postMessage()">
+                    Tuma Message <i class="fas fa-paper-plane" style="margin-left: 8px;"></i>
+                </button>
+            </div>
+        </section>
+
+        <div id="message-board">
+            </div>
     </div>
 
-    <header>
-        <div class="logo">
-            <i class="fas fa-fire"></i> Siri za Chumbani
-        </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
-
-
-
-
-
-
-
-
-<!-- Menu hidden initially -->
-
-
-
-
-        <div class="header-right-icons">
-          
-          
-          
-          
-          
-            <div class="menu-toggle" id="menuBtn">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
-            </div>
-        </div>
-    </header>
-
-    <nav class="nav-overlay" id="navOverlay">
-        <div class="nav-list">
-            <a href="#" class="nav-item">Platform <i class="fa-solid fa-chevron-right"></i></a>
-            <a href="#" class="nav-item">Solutions <i class="fa-solid fa-chevron-right"></i></a>
-            <a href="#" class="nav-item">Resources <i class="fa-solid fa-chevron-right"></i></a>
-            <a href="#" class="nav-item">Open Source <i class="fa-solid fa-chevron-right"></i></a>
-            <a href="#" class="nav-item">Pricing</a>
-        </div>
-        <div class="menu-footer">
-            <div class="search-box">
-                <i class="fa-solid fa-magnifying-glass"></i>
-                <input type="text" placeholder="Search or jump to...">
-            </div>
-            <a href="#" class="btn-signup">Sign up</a>
-        </div>
-    </nav>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-        
-    </header>
-
-    <main>
-        <div class="ngl-card">
-            <div class="profile-pic">
-                <img src="https://api.dicebear.com/6.x/avataaars/svg?seed=Felix&backgroundColor=b6e3f4" alt="Profile">
-                <div class="online-dot"></div>
-            </div>
-            
-            <h2 class="username">Anonymous </h2>
-            <p class="prompt-text">
-                Tuma siri yako, usibaki na mambo mazito moyoni. 
-                <br><strong>(100% Bila Kujulikana)</strong> 🔒
-            </p>
-
-            <div class="input-group">
-                <textarea id="secretInput" placeholder="Anza kuandika siri yako hapa..." maxlength="10000"></textarea>
-                <div class="char-counter"><span id="charCount">0</span>/10000</div>
-            </div>
-
-            <button id="submitBtn" class="submit-btn">
-                <i class="fas fa-paper-plane"></i> Tuma Siri Yako
-            </button>
-        </div>
-    </main>
+    <div id="toast-container">
+        <div id="toast" class="toast">Hongera, message yako imetumwa! 🚀</div>
+    </div>
 
     <footer>
-        <p>🔒 Imelindwa na 100% Anonymity. </p>
-        <p style="margin-top: 10px; opacity: 0.5;">© 2026 Mnyilinga Digital </p>
+        <p>&copy; 2026 Siri Board. Kila kitu ni siri hapa.</p>
     </footer>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const secretInput = document.getElementById('secretInput');
-            const submitBtn = document.getElementById('submitBtn');
-            const charCount = document.getElementById('charCount');
-            const toast = document.getElementById('successToast');
+        // --- 1. Dummy Data Source ---
+        // Katika production, badilisha hii iwe fetch() kutoka Google Sheets JSON API
+        let messages = [
+            {
+                id: 1,
+                author: "Mnyamwezi_01",
+                text: "Maisha ni mafupi, kula vizuri na furahia kila sekunde!",
+                timestamp: "2 mins ago",
+                seed: "mnyamwezi"
+            },
+            {
+                id: 2,
+                author: "Anonymous_Queen",
+                text: "Leo nimepata kazi mpya! Naishukuru sana hii platform kwa kunipa ujasiri wa kuongea.",
+                timestamp: "1 hour ago",
+                seed: "queen"
+            },
+            {
+                id: 3,
+                author: "Techie_Boi",
+                text: "Designing interactive UI is the best feeling ever! #Glassmorphism",
+                timestamp: "3 hours ago",
+                seed: "techie"
+            }
+        ];
 
-            // 1. Hesabu idadi ya maneno yanayoandikwa (Character Counter)
-            secretInput.addEventListener('input', () => {
-                const length = secretInput.value.length;
-                charCount.textContent = length;
-                
-                // Badili rangi ikikaribia kujaa
-                if(length > 5000) {
-                    charCount.style.color = 'var(--error-color)';
-                } else {
-                    charCount.style.color = 'var(--text-muted)';
-                }
-                
-                // Ondoa error border kama mtu ameanza kuandika
-                secretInput.classList.remove('shake');
-            });
+        const board = document.getElementById('message-board');
+        const input = document.getElementById('messageInput');
+        const counter = document.getElementById('count');
+        const toast = document.getElementById('toast');
 
-            // 2. Kazi inayoendelea ukibofya kitufe cha Kutuma
-            submitBtn.addEventListener('click', () => {
-                const siriYenyewe = secretInput.value.trim();
-
-                // Kama boksi liko wazi, tetemesha (Shake Error)
-                if (siriYenyewe === '') {
-                    secretInput.classList.add('shake');
-                    // Ondoa class ya shake baada ya animation kuisha ili iweze kutetema tena aki-click
-                    setTimeout(() => {
-                        secretInput.classList.remove('shake');
-                    }, 400);
-                    return;
-                }
-
-                // UI Kali: Fanya kitufe kioneshe 'Loading...'
-                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Inatuma...';
-                submitBtn.style.opacity = '0.8';
-                submitBtn.style.pointerEvents = 'none'; // Zuia kubofya mara mbili
-                secretInput.disabled = true; // Zuia kuandika wakati inatuma
-
-                // Iga mfumo wa kutuma kwenye server (Ngoja sekunde 1.5)
-                setTimeout(() => {
-                    // Rudisha kitufe katika hali ya kawaida
-                    submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Tuma Nyingine';
-                    submitBtn.style.opacity = '1';
-                    submitBtn.style.pointerEvents = 'auto';
-                    
-                    // Futa maandishi kwenye box
-                    secretInput.value = '';
-                    secretInput.disabled = false;
-                    charCount.textContent = '0';
-
-                    // Onesha Toast ya Mafanikio
-                    toast.classList.add('show');
-
-                    // Poteza Toast baada ya sekunde 3
-                    setTimeout(() => {
-                        toast.classList.remove('show');
-                    }, 3000);
-
-                }, 1500); // 1500ms = 1.5 Seconds
-            });
-        });
-    </script>
-    
-    
-    
-    
-    
-    
-    
-    
-
- <script>
-        const menuBtn = document.getElementById('menuBtn');
-        const navOverlay = document.getElementById('navOverlay');
-        const submitBtn = document.getElementById('submitBtn');
-        const secretInput = document.getElementById('secretInput');
-        const toast = document.getElementById('successToast');
-
-        // Logic ya Menu
-        menuBtn.addEventListener('click', () => {
-            menuBtn.classList.toggle('is-open');
-            navOverlay.classList.toggle('active');
-            // Zuia body kuscroll menu ikiwa wazi
-            document.body.style.overflow = navOverlay.classList.contains('active') ? 'hidden' : 'auto';
+        // --- 2. Live Character Counter ---
+        input.addEventListener('input', () => {
+            counter.innerText = input.value.length;
         });
 
-        // Logic ya Kutuma (Placeholder)
-        submitBtn.addEventListener('click', () => {
-            if(secretInput.value.trim() === "") return;
-            submitBtn.innerText = "Inatuma...";
+        // --- 3. Render Messages Function ---
+        function renderMessages(data) {
+            board.innerHTML = ""; // Clear board
+            data.forEach((msg, index) => {
+                const card = document.createElement('div');
+                card.className = "msg-card";
+                card.style.animationDelay = `${index * 0.1}s`; // Staggered animation
+                
+                // Using DiceBear for dynamic avatars
+                const avatarUrl = `https://api.dicebear.com/7.x/bottts/svg?seed=${msg.seed}`;
+
+                card.innerHTML = `
+                    <div class="msg-header">
+                        <img src="${avatarUrl}" alt="avatar" class="avatar">
+                        <div class="author-info">
+                            <h4>${msg.author} <span class="status-dot"></span></h4>
+                            <span>${msg.timestamp}</span>
+                        </div>
+                    </div>
+                    <div class="msg-body">
+                        ${msg.text}
+                    </div>
+                `;
+                board.appendChild(card);
+            });
+        }
+
+        // --- 4. Post New Message (Logic) ---
+        function postMessage() {
+            const text = input.value.trim();
+            
+            if (text === "") {
+                input.parentElement.classList.add('shake');
+                setTimeout(() => input.parentElement.classList.remove('shake'), 500);
+                return;
+            }
+
+            // Mimicking API Post
+            const newMessage = {
+                id: Date.now(),
+                author: "User_" + Math.floor(Math.random() * 100),
+                text: text,
+                timestamp: "Just now",
+                seed: text.substring(0, 5) // Use part of text as avatar seed
+            };
+
+            // Add to the beginning of array
+            messages.unshift(newMessage);
+            
+            // Clear input
+            input.value = "";
+            counter.innerText = "0";
+
+            // Update UI
+            renderMessages(messages);
+            showToast();
+        }
+
+        // --- 5. Toast Notification Logic ---
+        function showToast() {
+            toast.style.display = "block";
             setTimeout(() => {
-                secretInput.value = "";
-                submitBtn.innerText = "Tuma Siri Yako";
-                toast.classList.add('show');
-                setTimeout(() => toast.classList.remove('show'), 3000);
-            }, 1000);
-        });
-    </script>    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+                toast.style.display = "none";
+            }, 3000);
+        }
+
+        // --- 6. Auto-Update Simulation ---
+        // Hii ina-simulate 'live feed' kila baada ya sekunde 10
+        setInterval(() => {
+            console.log("Checking for new messages...");
+            // Hapa ungeweza kuweka fetch() yako
+        }, 10000);
+
+        // Initial Render
+        renderMessages(messages);
+    </script>
 </body>
 </html>
